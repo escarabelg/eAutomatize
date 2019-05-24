@@ -150,6 +150,8 @@
 
 
     @echo {release, {%app_name%, "0.0.1"}, [%app_name%, sasl, kernel, stdlib]}.> relx.config
+    @echo {lib_dirs, ["priv"]}.>> relx.config
+    @echo {generate_start_script, true}.>> relx.config
     @echo {extended_start_script, true}.>> relx.config
     @echo {include_erts, true}.>> relx.config
     @echo {include_src, false}.>> relx.config
