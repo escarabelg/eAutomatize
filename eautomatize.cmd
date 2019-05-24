@@ -105,20 +105,6 @@
 @goto :eof
 
 
-:: Deps
-:compile_dep
-@if "%2"=="cowboy" @( 
-  @echo COMPILING:
-  @call:compile_dep_ranch
-  @call:compile_dep_cowlib
-  @call:compile_dep_cowboy
-)
-@if "%2"=="" @(
-  @goto help
-)
-@goto :eof
-
-
 :: Doc
 :doc
 @erl -noshell -eval "edoc:application(%app_name%, src, [{dir, doc}])" -s init stop
@@ -185,30 +171,13 @@
 @goto :eof
 
 
-
-
-
-:: DEPS
-:compile_dep_ranch
-@echo  * RANCH
-@set dep_ranch=priv/ranch
-@FOR /R "%dep_ranch%/src" %%j in (*.erl) DO @(
-  erlc -v -pa %dep_ranch%/ebin/ -Werror +debug_info -I %dep_ranch%/include/ -W -o %dep_ranch%/ebin/ "%%j"
-)
-@goto :eof
-
-:compile_dep_cowlib
-@echo  * COWLIB
-@set dep_cowlib=priv/cowlib
-@FOR /R "%dep_cowlib%/src" %%j in (*.erl) DO @(
-  erlc -v -pa %dep_cowlib%/ebin/ -Werror +debug_info -I %dep_cowlib%/include/ -W -o %dep_cowlib%/ebin/ "%%j"
-)
-@goto :eof
-
-:compile_dep_cowboy
-@echo  * COWBOY
-@set dep_cowboy=priv/cowboy
-@FOR /R "%dep_cowboy%/src" %%j in (*.erl) DO @(
-  erlc -v -pa %dep_cowboy%/ebin/ -pa %dep_ranch%/ebin -pa %dep_cowlib%/ebin -Werror +debug_info -I %dep_cowboy%/include/ -W -o %dep_cowboy%/ebin/ "%%j"
+:: Deps
+:compile_dep
+@IF EXIST ".eautomatize/deps/%2.cmd" (
+  @call .eautomatize/deps/%2.cmd
+) ELSE (
+  @echo Ow No!
+  @echo   I still do not know how to work with this dependency.
+  @echo   Create a Pull request to creator insert in next version.
 )
 @goto :eof
