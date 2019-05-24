@@ -1,0 +1,57 @@
+ # src\appName_app.erl;
+# -------------------------------------
+-module(appName_app).
+-behaviour(application).
+-export([start/2, stop/1]).
+
+start(_StartType, _StartArgs) ->
+    appName_sup:start_link().
+
+stop(_State) ->
+    ok.
+
+
+# src\appName_sup.erl;
+# -------------------------------------
+-module(appName_sup).
+-behaviour(supervisor).
+-export([start_link/0]).
+-export([init/1]).
+-define(SERVER, ?MODULE).
+
+start_link() ->
+    supervisor:start_link({local, ?SERVER}, ?MODULE, []).
+
+init([]) ->
+    SupFlags = #{strategy => one_for_all,
+                 intensity => 0,
+                 period => 1},
+    ChildSpecs = [],
+    {ok, {SupFlags, ChildSpecs}}.
+
+
+
+
+
+
+# release 0.0.2
+# -------------------------------------
+
+# src\appName.appup.src;
+# -------------------------------------
+{"0.0.2",
+ [{"0.0.1",
+   [{load_module, appName_app},
+    {update, appName_message}]}],
+ [{"0.0.1",
+   [{load_module, appName_app}]}]}.
+
+
+# src\appName_message.erl;
+# -------------------------------------
+-module(escarabel_message).
+-export([sayHello/0]).
+
+sayHello() ->
+  io:format("I'm Say Hello to you. <3").
+
