@@ -81,19 +81,19 @@
 
 :: Release
 :release
-@escript .eautomatize\relx release
+@escript _eautomatize\relx release
 @goto :eof
 
 
 :: Relup
 :relup
-@escript .eautomatize\relx relup
+@escript _eautomatize\relx relup
 @goto :eof
 
 
 :: Tar
 :tar
-@escript .eautomatize\relx tar
+@escript _eautomatize\relx tar
 @goto :eof
 
 
@@ -163,7 +163,7 @@
     @echo     [{load_module, %app_name%_app}]}]}.>> src\%app_name%.appup.src
     
     
-    @copy ".eautomatize\example_src_app_otp.txt" "src\example_src_app_otp.txt" >NUL
+    @copy "_eautomatize\example_src_app_otp.txt" "src\example_src_app_otp.txt" >NUL
 )
 @if "%2"=="" @(
   @goto help
@@ -173,8 +173,8 @@
 
 :: Deps
 :compile_dep
-@IF EXIST ".eautomatize/deps/%2.cmd" (
-  @call .eautomatize/deps/%2.cmd
+@IF EXIST "_eautomatize/deps/%2.cmd" (
+  @call _eautomatize/deps/%2.cmd
 ) ELSE (
   @echo Ow No!
   @echo   I still do not know how to work with this dependency.
