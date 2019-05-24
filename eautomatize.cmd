@@ -146,7 +146,7 @@
     @echo    {maintainers, []},>> src\%app_name%.app.src
     @echo    {licenses, ["Apache 2.0"]},>> src\%app_name%.app.src
     @echo    {links, []}>> src\%app_name%.app.src
-    @echo  ]}.
+    @echo ]}.>> src\%app_name%.app.src
 
 
     @echo {release, {%app_name%, "0.0.1"}, [%app_name%, sasl, kernel, stdlib]}.> relx.config
